@@ -1,0 +1,4 @@
+opt/rdio/lib/*.a
+opt/rdio/lib/*.la
+opt/rdio/lib/pkgconfig
+opt/rdio/include
