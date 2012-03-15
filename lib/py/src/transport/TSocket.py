@@ -24,6 +24,9 @@ import socket
 import sys
 
 class TSocketBase(TTransportBase):
+
+  MAX_EINTRS = 5
+
   def _resolveAddr(self):
     if self._unix_socket is not None:
       return [(socket.AF_UNIX, socket.SOCK_STREAM, None, None, self._unix_socket)]
@@ -91,7 +94,16 @@ class TSocket(TSocketBase):
 
   def read(self, sz):
     try:
-      buff = self.handle.recv(sz)
+      while True:
+        try:
+          buff = self.handle.recv(sz)
+          break
+        except socket.error, err:
+          eno, message = err.args
+          if eno == errno.EINTR and num_eintrs < self.MAX_EINTRS:
+            num_eintrs += 1
+          else:
+            raise
     except socket.error, e:
       if (e.args[0] == errno.ECONNRESET and
           (sys.platform == 'darwin' or sys.platform.startswith('freebsd'))):
@@ -157,7 +169,19 @@ class TServerSocket(TSocketBase, TServerTransportBase):
     self.handle.listen(128)
 
   def accept(self):
-    client, addr = self.handle.accept()
+    num_eintrs = 0
+
+    while True:
+      try:
+        client, addr = self.handle.accept()
+        break
+      except socket.error, err:
+        eno, message = err.args
+        if eno == errno.EINTR and num_eintrs < self.MAX_EINTRS:
+          num_eintrs += 1
+        else:
+          raise
+
     result = TSocket()
     result.setHandle(client)
     return result
