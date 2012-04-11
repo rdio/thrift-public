@@ -99,8 +99,7 @@ class TSocket(TSocketBase):
           buff = self.handle.recv(sz)
           break
         except socket.error, err:
-          eno, message = err.args
-          if eno == errno.EINTR and num_eintrs < self.MAX_EINTRS:
+          if err.args[0] == errno.EINTR and num_eintrs < self.MAX_EINTRS:
             num_eintrs += 1
           else:
             raise
@@ -176,8 +175,7 @@ class TServerSocket(TSocketBase, TServerTransportBase):
         client, addr = self.handle.accept()
         break
       except socket.error, err:
-        eno, message = err.args
-        if eno == errno.EINTR and num_eintrs < self.MAX_EINTRS:
+        if err.args[0] == errno.EINTR and num_eintrs < self.MAX_EINTRS:
           num_eintrs += 1
         else:
           raise
