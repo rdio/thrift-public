@@ -1,3 +1,9 @@
+thrift (1.0.8.0-rdio3) stable; urgency=low
+
+  * Added THRIFT-1515 patch
+
+ -- Matt Erkkila <matt.erkkila@rd.io>  Tue, 17 Apr 2012 08:30:00 -0800
+
 thrift (1.0.8.0-rdio2) stable; urgency=low
 
   * Fix for retry in EINTR patch
