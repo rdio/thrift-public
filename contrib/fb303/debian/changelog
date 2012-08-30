@@ -1,0 +1,11 @@
+thrift-fb303 (0.1-rdio1) unstable; urgency=low
+
+  * Rdio debian work
+
+ -- Matt Erkkila <matt.erkkila.rd.io>  Thu, 15 Mar 2012 13:00:00 -0800
+
+thrift-fb303 (0.1-1) unstable; urgency=low
+
+  * Initial Release.
+
+ -- goffinet <goffinet@digg.com>  Mon, 13 Apr 2009 19:32:45 -0700
