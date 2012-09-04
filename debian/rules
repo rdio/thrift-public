@@ -23,7 +23,7 @@ configure-stamp:
 	dh_testdir
 	# Add here commands to configure the package.
 	if [ -f bootstrap.sh ]; then $(CURDIR)/bootstrap.sh; fi
-	$(CURDIR)/configure --prefix=/usr --with-c_glib --without-ruby --without-csharp --without-php --without-perl --without-php_extension
+	$(CURDIR)/configure --with-c_glib --without-ruby --without-csharp --without-php --without-perl --without-php_extension
 
 	touch configure-stamp
 
@@ -133,14 +133,14 @@ install-arch:
 	#$(MAKE) DESTDIR=$(CURDIR)/debian/thrift install
 
 	# Compiler
-	mkdir -p $(CURDIR)/debian/thrift-compiler/usr/bin && \
+	mkdir -p $(CURDIR)/debian/thrift-compiler/usr/local/bin && \
 	cp $(CURDIR)/compiler/cpp/thrift \
-		$(CURDIR)/debian/thrift-compiler/usr/bin/thrift
+		$(CURDIR)/debian/thrift-compiler/usr/local/bin/thrift
 
 	# Python
 	cd $(CURDIR)/lib/py && \
 	for py in $(PYVERS); do \
-		$$py setup.py install --prefix=/usr --root=$(CURDIR)/debian/python-thrift; \
+		$$py setup.py install --root=$(CURDIR)/debian/python-thrift; \
 	done
 
 	#find $(CURDIR)/debian/python-thrift-dbg -name "*.pyc" -print0 | xargs -0 rm -f

@@ -7,6 +7,6 @@ Standards-Version: 3.7.2
 
 Package: thrift-fb303
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends}, libthrift0, python-thrift
 Description: Facebook's contrib fb303 library
  A standard interface to monitoring, dynamic options and configuration, uptime reports, activity, etc.

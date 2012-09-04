@@ -29,10 +29,8 @@ configure-stamp:
 	dh_testdir
 	# Add here commands to configure the package.
 	$(CURDIR)/bootstrap.sh
-	$(CURDIR)/configure --host=$(DEB_HOST_GNU_TYPE) --build=$(DEB_BUILD_GNU_TYPE) --prefix=/usr \
-                            --mandir=\$${prefix}/share/man --infodir=\$${prefix}/share/info --with-thriftpath=/usr \
-                            CPPFLAGS="-DHAVE_INTTYPES_H -DHAVE_NETINET_IN_H" CFLAGS="$(CFLAGS)" LDFLAGS="-Wl,-z,defs" \
-                            PY_PREFIX="/usr"
+	$(CURDIR)/configure --host=$(DEB_HOST_GNU_TYPE) --build=$(DEB_BUILD_GNU_TYPE) \
+                            CPPFLAGS="-DHAVE_INTTYPES_H -DHAVE_NETINET_IN_H" CFLAGS="$(CFLAGS)" LDFLAGS="-Wl,-z,defs" 
 	touch configure-stamp
 
 
@@ -72,6 +70,7 @@ install: build
 
 	# Add here commands to install the package into debian/thrift-fb303.
 	$(MAKE) DESTDIR=$(CURDIR)/debian/thrift-fb303 install
+	rm -rf $(CURDIR)/debian/thrift-fb303/usr/local/lib/python2.7/dist-packages/thrift-0.9.0_dev.egg-info/
 
 
 # Build architecture-independent files here.
